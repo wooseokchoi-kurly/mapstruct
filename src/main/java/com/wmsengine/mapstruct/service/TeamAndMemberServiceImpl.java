@@ -32,9 +32,7 @@ public class TeamAndMemberServiceImpl implements TeamAndMemberService {
     @Transactional
     @Override
     public Long createMember(MemberDto memberDto) {
-        Team team = teamRepository.findById(memberDto.getTeamId()).orElseThrow(IllegalArgumentException::new);
-        Member member = memberMapper.toEntity(memberDto);
-        member.setTeam(team);
+        Member member = memberMapper.toEntity(memberDto, teamRepository);
         Member newMember = memberRepository.save(member);
 
         return newMember.getId();
